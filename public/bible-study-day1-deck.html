@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>Is The Bible Reliable? — 21 Day Fast, Day 1</title>
+<style>
+  :root{
+    --bg:#070b18;
+    --bg2:#0f1730;
+    --ink:#eef2ff;
+    --muted:#9fb0d4;
+    --accent:#f4c25b;
+    --accent2:#6ea8fe;
+    --accent3:#b78bff;
+    --card:rgba(255,255,255,.045);
+    --line:rgba(255,255,255,.10);
+    --glass:rgba(13,20,40,.55);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+    cursor:default;
+  }
+
+  /* Animated cosmic canvas behind everything */
+  #sky{position:fixed; inset:0; z-index:0; display:block;}
+  .glow{position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(1200px 760px at 82% -12%, rgba(110,168,254,.20), transparent 60%),
+      radial-gradient(960px 640px at -12% 112%, rgba(244,194,91,.18), transparent 55%),
+      radial-gradient(900px 700px at 50% 130%, rgba(183,139,255,.12), transparent 60%);
+    animation:breathe 14s ease-in-out infinite alternate;}
+  @keyframes breathe{from{opacity:.7}to{opacity:1}}
+
+  /* Top progress + counter */
+  .topbar{position:fixed;top:0;left:0;right:0;height:5px;z-index:40;background:rgba(255,255,255,.06)}
+  .progress{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));
+    background-size:200% 100%; transition:width .45s cubic-bezier(.2,.8,.2,1);
+    box-shadow:0 0 16px rgba(244,194,91,.55); animation:flow 6s linear infinite;}
+  @keyframes flow{to{background-position:200% 0}}
+
+  .brand{position:fixed;top:16px;left:24px;z-index:40;font-size:12.5px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);
+    box-shadow:0 0 10px var(--accent);animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.5}}
+
+  .counter{position:fixed;top:14px;right:24px;z-index:40;font-variant-numeric:tabular-nums;
+    color:var(--muted);font-size:13px;background:var(--glass);border:1px solid var(--line);
+    padding:6px 12px;border-radius:999px;backdrop-filter:blur(10px)}
+
+  /* Stage + slides */
+  .stage{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;
+    padding:80px 6vw 112px;perspective:1600px}
+  .slide{position:absolute;width:min(1000px,92vw);max-height:80vh;overflow:auto;
+    background:var(--glass);border:1px solid var(--line);border-radius:24px;padding:50px 56px;
+    box-shadow:0 40px 100px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.06);
+    backdrop-filter:blur(14px) saturate(1.2);
+    opacity:0;pointer-events:none;
+    transform:translateY(40px) rotateX(7deg) scale(.96);
+    transition:opacity .55s ease, transform .65s cubic-bezier(.2,.85,.25,1);}
+  .slide.active{opacity:1;transform:none;pointer-events:auto}
+  .slide.leaving{opacity:0;transform:translateY(-30px) rotateX(-6deg) scale(.97);transition:opacity .4s ease,transform .45s ease}
+  .slide::-webkit-scrollbar{width:8px}
+  .slide::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
+
+  .kicker{font-size:12.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);
+    margin-bottom:16px;font-weight:700;
+    opacity:0;transform:translateY(12px);transition:.5s .05s}
+  .active .kicker{opacity:1;transform:none}
+
+  h1{font-size:clamp(36px,6vw,68px);line-height:1.04;font-weight:800;letter-spacing:-1px;
+    background:linear-gradient(120deg,#fff 20%,var(--accent) 60%,var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    opacity:0;transform:translateY(18px);transition:.7s .12s cubic-bezier(.2,.85,.25,1)}
+  h2{font-size:clamp(28px,3.8vw,46px);line-height:1.1;font-weight:800;letter-spacing:-.5px;margin-bottom:6px;
+    opacity:0;transform:translateY(16px);transition:.6s .1s cubic-bezier(.2,.85,.25,1)}
+  .active h1,.active h2{opacity:1;transform:none}
+
+  .sub{color:var(--muted);font-size:clamp(16px,1.95vw,21px);margin-top:18px;line-height:1.55;
+    opacity:0;transform:translateY(12px);transition:.6s .2s}
+  .active .sub{opacity:1;transform:none}
+
+  ul{list-style:none;margin-top:26px;display:grid;gap:14px}
+  li{position:relative;padding:15px 18px 15px 50px;background:rgba(255,255,255,.035);
+    border:1px solid var(--line);border-radius:14px;font-size:clamp(15px,1.85vw,19px);line-height:1.45;
+    opacity:0;transform:translateX(-18px) translateY(6px);
+    transition:opacity .5s, transform .5s cubic-bezier(.2,.85,.25,1);
+    overflow:hidden}
+  li::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
+    transform:translateX(-100%);}
+  li.shimmer::after{animation:shim 1s ease}
+  @keyframes shim{to{transform:translateX(100%)}}
+  li::before{content:"";position:absolute;left:18px;top:50%;transform:translateY(-50%);
+    width:15px;height:15px;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%,var(--accent2),var(--accent3));
+    box-shadow:0 0 12px rgba(110,168,254,.6)}
+  li .note{display:block;color:var(--muted);font-size:.85em;margin-top:7px}
+  .slide.active li{opacity:1;transform:none}
+  .slide.active li:nth-child(1){transition-delay:.22s}
+  .slide.active li:nth-child(2){transition-delay:.34s}
+  .slide.active li:nth-child(3){transition-delay:.46s}
+  .slide.active li:nth-child(4){transition-delay:.58s}
+  .slide.active li:nth-child(5){transition-delay:.70s}
+  .slide.active li:nth-child(6){transition-delay:.82s}
+
+  .verse{margin-top:26px;padding:22px 26px;border-left:4px solid var(--accent);
+    background:rgba(244,194,91,.08);border-radius:0 16px 16px 0;font-style:italic;
+    font-size:clamp(16px,2vw,21px);line-height:1.5;position:relative;
+    opacity:0;transform:translateY(14px);transition:.6s .4s}
+  .active .verse{opacity:1;transform:none}
+  .verse::before{content:"\201C";position:absolute;top:-18px;left:14px;font-size:70px;
+    color:var(--accent);opacity:.25;font-family:Georgia,serif}
+  .verse .ref{display:block;font-style:normal;color:var(--accent);font-weight:700;margin-top:12px;
+    font-size:.82em;letter-spacing:.05em}
+
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:28px}
+  .fact{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:16px;padding:20px;
+    text-align:center;opacity:0;transform:translateY(20px) scale(.95);
+    transition:opacity .55s,transform .55s cubic-bezier(.2,.85,.25,1)}
+  .active .fact{opacity:1;transform:none}
+  .active .fact:nth-child(1){transition-delay:.2s}
+  .active .fact:nth-child(2){transition-delay:.32s}
+  .active .fact:nth-child(3){transition-delay:.44s}
+  .active .fact:nth-child(4){transition-delay:.56s}
+  .fact b{display:block;font-size:clamp(24px,3.2vw,38px);
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .fact span{color:var(--muted);font-size:14px;display:block;margin-top:8px}
+
+  .bignum{margin-top:26px;text-align:center;font-weight:800;letter-spacing:1px;
+    font-size:clamp(20px,3.6vw,44px);font-variant-numeric:tabular-nums;
+    background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));
+    background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+    word-break:break-all;animation:flow 5s linear infinite;
+    text-shadow:0 0 40px rgba(244,194,91,.15)}
+  .cap{text-align:center;color:var(--muted);margin-top:10px;font-size:15px;
+    opacity:0;transition:.6s .3s}
+  .active .cap{opacity:1}
+
+  /* Controls */
+  .controls{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:40;
+    display:flex;align-items:center;gap:12px;background:var(--glass);border:1px solid var(--line);
+    padding:9px 14px;border-radius:999px;backdrop-filter:blur(12px);
+    box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .btn{appearance:none;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--ink);
+    width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:18px;display:grid;place-items:center;
+    transition:.2s}
+  .btn:hover{background:rgba(255,255,255,.14);transform:translateY(-2px)}
+  .btn:active{transform:translateY(0)}
+  .btn:disabled{opacity:.3;cursor:not-allowed;transform:none}
+  .btn.small{width:38px;height:38px;font-size:15px}
+  .dots{display:flex;gap:8px;padding:0 6px}
+  .dot-nav{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.22);cursor:pointer;
+    transition:.25s;border:none;padding:0}
+  .dot-nav:hover{background:rgba(255,255,255,.5)}
+  .dot-nav.on{background:var(--accent);transform:scale(1.4);box-shadow:0 0 10px var(--accent)}
+
+  .hint{position:fixed;bottom:74px;left:50%;transform:translateX(-50%);color:var(--muted);
+    font-size:12px;z-index:30;letter-spacing:.04em;opacity:.85;transition:opacity .6s}
+  .hint.hide{opacity:0}
+
+  /* Overview grid mode */
+  .overview{position:fixed;inset:0;z-index:50;background:rgba(7,11,24,.92);backdrop-filter:blur(14px);
+    display:none;padding:70px 5vw 40px;overflow:auto}
+  .overview.show{display:block}
+  .ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;max-width:1200px;margin:0 auto}
+  .ov-card{aspect-ratio:16/10;border:1px solid var(--line);border-radius:14px;cursor:pointer;
+    background:var(--card);padding:16px;overflow:hidden;position:relative;transition:.2s;display:flex;flex-direction:column;justify-content:flex-end}
+  .ov-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 14px 30px rgba(0,0,0,.4)}
+  .ov-card .n{position:absolute;top:12px;left:14px;font-size:12px;color:var(--accent);font-weight:700}
+  .ov-card .t{font-size:15px;font-weight:700;line-height:1.25}
+  .ov-card .k{font-size:11px;color:var(--muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:4px}
+  .ov-title{text-align:center;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;font-size:13px;margin-bottom:24px}
+
+  @media (max-width:600px){
+    .slide{padding:34px 26px;border-radius:18px}
+    .brand{display:none}
+    .dots{display:none}
+    .stage{padding:72px 4vw 104px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:opacity .2s!important}
+    .slide{transform:none!important}
+  }
+</style>
+</head>
+<body>
+  <canvas id="sky"></canvas>
+  <div class="glow"></div>
+
+  <div class="topbar"><div class="progress" id="progress"></div></div>
+  <div class="brand"><span class="dot"></span>Kingdom Apologetics · 21 Day Fast</div>
+  <div class="counter"><span id="cur">1</span> / <span id="total">11</span></div>
+
+  <div class="stage" id="stage">
+
+    <section class="slide" data-kicker="Day 1" data-title="Is The Bible Reliable?">
+      <div class="kicker">21 Day Fast Bible Study · Day 1</div>
+      <h1>Is The Bible<br/>Reliable?</h1>
+      <p class="sub">A look at the evidence behind Scripture — and why it changes everything if it's true.</p>
+    </section>
+
+    <section class="slide" data-kicker="The Foundation" data-title="What's at Stake?">
+      <div class="kicker">The Foundation</div>
+      <h2>What's at Stake?</h2>
+      <p class="sub">If the Bible isn't true, then:</p>
+      <ul>
+        <li>Our faith is built on fiction.</li>
+        <li>Jesus' words are unreliable.</li>
+        <li>But if it <em>is</em> true — it changes everything.</li>
+      </ul>
+      <div class="verse">
+        "All Scripture is inspired by God and is useful for teaching, for rebuking, for correcting, and for training in righteousness…"
+        <span class="ref">2 Timothy 3:16–17 (GNT)</span>
+      </div>
+    </section>
+
+    <section class="slide" data-kicker="A Unified Story" data-title="Internal Consistency">
+      <div class="kicker">A Unified Story</div>
+      <h2>The Bible Has Internal Consistency</h2>
+      <div class="facts">
+        <div class="fact"><b>~1,500</b><span>Years to write</span></div>
+        <div class="fact"><b>~40</b><span>Authors</span></div>
+        <div class="fact"><b>Many</b><span>Continents</span></div>
+        <div class="fact"><b>Many</b><span>Genres</span></div>
+      </div>
+      <p class="sub">…and yet it tells <strong>one unified storyline</strong>.</p>
+    </section>
+
+    <section class="slide" data-kicker="Reason #1" data-title="Manuscript Reliability">
+      <div class="kicker">Reason to Trust the Bible · #1</div>
+      <h2>Manuscript Reliability</h2>
+      <ul>
+        <li>5,800+ Greek New Testament manuscripts
+          <span class="note">Manuscript: a handwritten copy of a document from before the printing press.</span>
+        </li>
+        <li>Earliest fragments are ~30 years from the original.</li>
+        <li>If we reject the Bible as unreliable, we'd have to throw out basically <em>all</em> of ancient history.</li>
+      </ul>
+    </section>
+
+    <section class="slide" data-kicker="Reason #2" data-title="The Dead Sea Scrolls">
+      <div class="kicker">Reason to Trust the Bible · #2</div>
+      <h2>The Dead Sea Scrolls</h2>
+      <ul>
+        <li>Discovered in 1947, dated back to 200 B.C.</li>
+        <li>Contained the Isaiah scroll — nearly identical to today's Bible.</li>
+        <li>900+ ancient texts, including copies of the Hebrew Bible.</li>
+        <li>Confirms careful transmission of Scripture over centuries.</li>
+        <li>Proves the incredible preservation of Scripture.</li>
+      </ul>
+    </section>
+
+    <section class="slide" data-kicker="Reason #3" data-title="Prophetic Fulfillment">
+      <div class="kicker">Reason to Trust the Bible · #3</div>
+      <h2>Prophetic Fulfillment</h2>
+      <ul>
+        <li>300+ Messianic prophecies fulfilled by Jesus:</li>
+        <li>Birth — <em>Micah 5:2</em></li>
+        <li>Life &amp; ministry — <em>Isaiah 61, Psalm 78</em></li>
+        <li>Death — <em>Isaiah 53, Psalm 22</em></li>
+      </ul>
+      <div class="bignum" id="bignum" data-target="100000000000000000">0</div>
+      <p class="cap">The odds against one person fulfilling them all by chance.</p>
+    </section>
+
+    <section class="slide" data-kicker="The Authority" data-title="Jesus' View of Scripture">
+      <div class="kicker">The Authority</div>
+      <h2>Jesus' View of Scripture</h2>
+      <ul>
+        <li>Quoted Scripture constantly<span class="note">Matthew 4:4 · Matthew 4:7</span></li>
+        <li>Treated it as final authority<span class="note">John 10:34–35</span></li>
+        <li>Said "It is written" — not "I feel"<span class="note">Luke 4:4 · Luke 4:8</span></li>
+      </ul>
+    </section>
+
+    <section class="slide" data-kicker="Discernment" data-title="Scripture vs. Experience">
+      <div class="kicker">Discernment</div>
+      <h2>Scripture vs. Personal Experience</h2>
+      <ul>
+        <li>Experiences are real.</li>
+        <li>Experiences are not authoritative.</li>
+        <li>Scripture interprets experience — not the other way around.</li>
+      </ul>
+    </section>
+
+    <section class="slide" data-kicker="Study · Part 1" data-title="Read &amp; Observe">
+      <div class="kicker">How To Study The Bible · Part 1</div>
+      <h2>Read &amp; Observe</h2>
+      <ul>
+        <li><strong>1. Read in Context</strong><span class="note">Read the chapter, not just the verse. Ask: Who's speaking? To whom? Why now?</span></li>
+        <li><strong>2. Observation Before Interpretation</strong><span class="note">What does the text say? What words are repeated? What stands out?</span></li>
+        <li><strong>3. Scripture-to-Scripture Method</strong><span class="note">Let the Bible explain the Bible. Use cross-references. Compare OT foundations with NT fulfillment.</span></li>
+      </ul>
+    </section>
+
+    <section class="slide" data-kicker="Study · Part 2" data-title="Context &amp; Questions">
+      <div class="kicker">How To Study The Bible · Part 2</div>
+      <h2>Context &amp; Questions</h2>
+      <ul>
+        <li><strong>1. Historical &amp; Cultural Awareness</strong><span class="note">The Bible was written for us, not to us. Identify audience, covenant, and setting.</span></li>
+        <li><strong>2. Word Study</strong><span class="note">Focus on keywords. Use a concordance. Compare how the same word is used elsewhere.</span></li>
+        <li><strong>3. Ask the Right Questions</strong><span class="note">What does this teach about God? About humanity? What response does it demand?</span></li>
+      </ul>
+    </section>
+
+    <section class="slide" data-kicker="Study · Part 3" data-title="Pray &amp; Stay Consistent">
+      <div class="kicker">How To Study The Bible · Part 3</div>
+      <h2>Pray &amp; Stay Consistent</h2>
+      <ul>
+        <li><strong>1. Pray Before, During, and After</strong><span class="note">Ask for illumination, not new revelation. Pray for humility, not confirmation.</span></li>
+        <li><strong>2. Be Consistent, Not Extreme</strong><span class="note">Small, regular study beats random deep dives. One passage studied well &gt; ten chapters skimmed.</span></li>
+      </ul>
+      <p class="sub">✦ End of Day 1 — <em>The Word is reliable. Now go study it.</em></p>
+    </section>
+
+  </div>
+
+  <div class="hint" id="hint">← → to navigate · <b>O</b> overview · <b>F</b> fullscreen · swipe on mobile</div>
+
+  <div class="controls">
+    <button class="btn small" id="overview-btn" title="Overview (O)">▦</button>
+    <button class="btn" id="prev" title="Previous (←)">‹</button>
+    <div class="dots" id="dots"></div>
+    <button class="btn" id="next" title="Next (→)">›</button>
+    <button class="btn small" id="fs-btn" title="Fullscreen (F)">⛶</button>
+  </div>
+
+  <div class="overview" id="overview">
+    <div class="ov-title">Jump to a slide</div>
+    <div class="ov-grid" id="ov-grid"></div>
+  </div>
+
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  const total=slides.length;
+  let i=0;
+  const $=id=>document.getElementById(id);
+  const progress=$('progress'), cur=$('cur'), dotsWrap=$('dots');
+  $('total').textContent=total;
+
+  // Build nav dots + overview cards
+  const ovGrid=$('ov-grid');
+  slides.forEach((s,idx)=>{
+    const b=document.createElement('button');
+    b.className='dot-nav'; b.title='Slide '+(idx+1);
+    b.addEventListener('click',()=>go(idx));
+    dotsWrap.appendChild(b);
+
+    const c=document.createElement('div');
+    c.className='ov-card';
+    c.innerHTML='<span class="n">'+(idx+1)+'</span>'+
+      '<div class="k">'+(s.dataset.kicker||'')+'</div>'+
+      '<div class="t">'+(s.dataset.title||'')+'</div>';
+    c.addEventListener('click',()=>{closeOverview();go(idx)});
+    ovGrid.appendChild(c);
+  });
+  const dots=[...dotsWrap.children];
+
+  let numberAnimated=false;
+  function animateNumber(){
+    const el=$('bignum'); if(!el||numberAnimated)return;
+    numberAnimated=true;
+    const target=+el.dataset.target, dur=1600, start=performance.now();
+    const fmt=n=>Math.floor(n).toLocaleString('en-US');
+    function step(t){
+      const p=Math.min((t-start)/dur,1);
+      const eased=1-Math.pow(1-p,4);
+      el.textContent=fmt(target*eased);
+      if(p<1)requestAnimationFrame(step); else el.textContent=fmt(target);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function go(n){
+    n=Math.max(0,Math.min(total-1,n));
+    if(n===i && slides[i].classList.contains('active'))return;
+    i=n;
+    slides.forEach((s,idx)=>{
+      s.classList.remove('leaving');
+      if(idx===i){s.classList.add('active');}
+      else if(s.classList.contains('active')){s.classList.remove('active');s.classList.add('leaving');}
+    });
+    // shimmer the bullets briefly for life
+    slides[i].querySelectorAll('li').forEach((li,k)=>{
+      li.classList.remove('shimmer');
+      setTimeout(()=>li.classList.add('shimmer'),260+k*120);
+    });
+    dots.forEach((d,idx)=>d.classList.toggle('on',idx===i));
+    progress.style.width=((i+1)/total*100)+'%';
+    cur.textContent=i+1;
+    $('prev').disabled=i===0; $('next').disabled=i===total-1;
+    if(slides[i].querySelector('#bignum')) setTimeout(animateNumber,500);
+    if(location.hash!=='#'+(i+1)) history.replaceState(null,'','#'+(i+1));
+  }
+
+  $('prev').addEventListener('click',()=>go(i-1));
+  $('next').addEventListener('click',()=>go(i+1));
+
+  // Overview
+  const ov=$('overview');
+  function openOverview(){ov.classList.add('show')}
+  function closeOverview(){ov.classList.remove('show')}
+  $('overview-btn').addEventListener('click',()=>ov.classList.toggle('show'));
+
+  // Fullscreen
+  $('fs-btn').addEventListener('click',toggleFs);
+  function toggleFs(){
+    if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+    else{document.exitFullscreen&&document.exitFullscreen();}
+  }
+
+  // Keyboard
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){closeOverview();return;}
+    if(ov.classList.contains('show'))return;
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(i+1);}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(i-1);}
+    else if(e.key==='Home')go(0);
+    else if(e.key==='End')go(total-1);
+    else if(e.key==='o'||e.key==='O')openOverview();
+    else if(e.key==='f'||e.key==='F')toggleFs();
+  });
+
+  // Touch swipe
+  let x0=null,y0=null;
+  document.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+  document.addEventListener('touchend',e=>{
+    if(x0===null)return;
+    const dx=e.changedTouches[0].clientX-x0, dy=e.changedTouches[0].clientY-y0;
+    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))go(i+(dx<0?1:-1));
+    x0=y0=null;
+  });
+
+  // Auto-hide hint
+  setTimeout(()=>$('hint').classList.add('hide'),5200);
+
+  /* ---- Cosmic starfield canvas ---- */
+  const cv=$('sky'), ctx=cv.getContext('2d');
+  let W,H,stars=[],DPR=Math.min(window.devicePixelRatio||1,2);
+  function resize(){
+    W=cv.width=innerWidth*DPR; H=cv.height=innerHeight*DPR;
+    cv.style.width=innerWidth+'px'; cv.style.height=innerHeight+'px';
+    const count=Math.round((innerWidth*innerHeight)/9000);
+    stars=Array.from({length:count},()=>({
+      x:Math.random()*W, y:Math.random()*H,
+      z:Math.random()*0.8+0.2,
+      r:(Math.random()*1.3+0.3)*DPR,
+      tw:Math.random()*Math.PI*2,
+      tws:Math.random()*0.03+0.005
+    }));
+  }
+  resize(); addEventListener('resize',resize);
+  let mx=0.5,my=0.5;
+  addEventListener('mousemove',e=>{mx=e.clientX/innerWidth;my=e.clientY/innerHeight});
+  const palette=['244,194,91','110,168,254','183,139,255','255,255,255'];
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const ox=(mx-0.5)*30*DPR, oy=(my-0.5)*30*DPR;
+    for(const s of stars){
+      s.tw+=s.tws;
+      const a=(0.35+Math.sin(s.tw)*0.35)*s.z;
+      const col=palette[(Math.floor(s.x+s.y))%palette.length];
+      ctx.beginPath();
+      ctx.fillStyle='rgba('+col+','+a.toFixed(3)+')';
+      ctx.arc(s.x+ox*s.z, s.y+oy*s.z, s.r*s.z, 0, 6.283);
+      ctx.fill();
+      // gentle drift upward
+      s.y-=s.z*0.12*DPR; if(s.y<-4){s.y=H+4;s.x=Math.random()*W;}
+    }
+    requestAnimationFrame(draw);
+  }
+  if(!matchMedia('(prefers-reduced-motion:reduce)').matches) draw();
+
+  // Deep-link via #N + back/forward support
+  const fromHash=parseInt((location.hash||'').replace('#',''),10);
+  go(Number.isFinite(fromHash)&&fromHash>=1?fromHash-1:0);
+  window.addEventListener('hashchange',()=>{
+    const n=parseInt(location.hash.replace('#',''),10);
+    if(Number.isFinite(n)&&n-1!==i)go(n-1);
+  });
+})();
+</script>
+</body>
+</html>
